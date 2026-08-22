@@ -30,6 +30,7 @@ output/*.docx
 # Active/Personal resume data & JD files (Keep sample files only in git)
 data/resume_data.json
 data/resume_static.json
+data/resume_static-*.json
 data/jd.txt
 data/jd.text
 

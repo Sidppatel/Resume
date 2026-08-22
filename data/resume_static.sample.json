@@ -1,0 +1,43 @@
+{
+  "header": {
+    "name": "ALEX R. MORGAN",
+    "contact": {
+      "location": "Austin, TX",
+      "phone": "(512) 555-0199",
+      "email": "alex.morgan@email.com",
+      "linkedin": "linkedin.com/in/alexmorgan-data",
+      "github": "github.com/alexmorgan-analytics"
+    }
+  },
+  "professional_experience_structure": [
+    {
+      "company": "TECH CORP GLOBAL",
+      "role": "Senior Data Analyst",
+      "location": "Austin, TX",
+      "dates": "Jan 2023 – Present"
+    },
+    {
+      "company": "INNOVATIVE DATA SYSTEMS",
+      "role": "Data Analyst",
+      "location": "Dallas, TX",
+      "dates": "Jun 2020 – Dec 2022"
+    }
+  ],
+  "education_and_certifications": [
+    {
+      "institution": "University of Texas at Austin",
+      "title": "Bachelor of Science in Computer Science & Data Analytics",
+      "dates": "2016 – 2020",
+      "bullets": [
+        "Honors Graduate, President's Honor Roll"
+      ]
+    },
+    {
+      "institution": "Amazon Web Services (AWS)",
+      "title": "AWS Certified Data Analytics – Specialty",
+      "dates": "2023",
+      "credential_id": "AWS-DAS-2023-XYZ",
+      "bullets": []
+    }
+  ]
+}

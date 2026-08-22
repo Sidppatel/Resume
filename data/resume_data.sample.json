@@ -1,0 +1,80 @@
+{
+  "header": {
+    "name": "ALEX R. MORGAN",
+    "job_title": "Lead Data Analyst & Analytics Engineer",
+    "contact": {
+      "location": "Austin, TX",
+      "phone": "(512) 555-0199",
+      "email": "alex.morgan@email.com",
+      "linkedin": "linkedin.com/in/alexmorgan-data",
+      "github": "github.com/alexmorgan-analytics"
+    }
+  },
+  "summary": "High-impact **Lead Data Analyst & Analytics Engineer** with 5+ years of experience designing enterprise data models, scalable ETL/ELT pipelines, and executive BI dashboards. Proven track record of **optimizing query performance by 45%**, spearheading cross-functional data governance, and translating complex business requirements into actionable data products using **SQL, Python, dbt, and Power BI**.",
+  "technical_skills": [
+    {
+      "category": "Languages & Core",
+      "skills": "SQL (PostgreSQL, Snowflake, BigQuery, T-SQL), Python (Pandas, NumPy, Polars), R, Bash"
+    },
+    {
+      "category": "Data Engineering & Analytics",
+      "skills": "dbt, Airflow, ETL/ELT Pipelines, Data Modeling (Star Schema, 3NF), STTM, Data Profiling"
+    },
+    {
+      "category": "BI, Visualization & Cloud",
+      "skills": "Power BI (DAX, Power Query), Tableau, Looker Studio, AWS (S3, Athena), Snowflake, Git"
+    }
+  ],
+  "professional_experience": [
+    {
+      "company": "TECH CORP GLOBAL",
+      "location": "Austin, TX",
+      "role": "Senior Data Analyst",
+      "dates": "Jan 2023 \u2013 Present",
+      "bullets": [
+        "Architected automated data mart using **dbt and Snowflake**, reducing daily reporting latency from **4 hours to 12 minutes**.",
+        "Built and deployed 10+ executive **Power BI dashboards** across finance and marketing, empowering **50+ stakeholders** with self-serve analytics.",
+        "Authored end-to-end **Source-to-Target Mappings (STTM)** and implemented automated data validation checks, boosting data accuracy to **99.8%**."
+      ]
+    },
+    {
+      "company": "INNOVATIVE DATA SYSTEMS",
+      "location": "Dallas, TX",
+      "role": "Data Analyst",
+      "dates": "Jun 2020 \u2013 Dec 2022",
+      "bullets": [
+        "Constructed automated ingestion pipelines in **Python & SQL**, processing **1M+ daily transaction records** seamlessly.",
+        "Optimized complex SQL analytical queries, eliminating bottlenecks and **cutting server compute costs by 35%**.",
+        "Partnered with product managers and engineers to standardize KPI definitions across 4 business units."
+      ]
+    }
+  ],
+  "key_projects": [
+    {
+      "title": "Enterprise Sales & Customer Analytics Platform",
+      "tools": "Snowflake, dbt, Power BI, Python",
+      "dates": "2023 \u2013 2024",
+      "bullets": [
+        "Engineered end-to-end analytics platform that consolidated disparate CRM and ERP data streams.",
+        "Implemented role-based row-level security in **Power BI** and built modular semantic models supporting **$50M+ ARR operations**."
+      ]
+    }
+  ],
+  "education_and_certifications": [
+    {
+      "institution": "University of Texas at Austin",
+      "title": "Bachelor of Science in Computer Science & Data Analytics",
+      "dates": "2016 \u2013 2020",
+      "bullets": [
+        "Honors Graduate, President's Honor Roll"
+      ]
+    },
+    {
+      "institution": "Amazon Web Services (AWS)",
+      "title": "AWS Certified Data Analytics \u2013 Specialty",
+      "dates": "2023",
+      "credential_id": "AWS-DAS-2023-XYZ",
+      "bullets": []
+    }
+  ]
+}

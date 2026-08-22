@@ -1,0 +1,20 @@
+Job Title: Senior Business Intelligence & Analytics Engineer
+Location: Austin, TX / Remote
+Department: Enterprise Data & Analytics
+
+About the Role:
+We are seeking an experienced Senior Business Intelligence & Analytics Engineer to lead the design and development of modern analytics solutions. You will work directly with leadership to define core metrics, optimize semantic data models, build scalable ETL pipelines, and deliver intuitive Power BI dashboards.
+
+Key Responsibilities:
+- Design, build, and optimize end-to-end data models using Star Schema methodology in Snowflake and dbt.
+- Develop interactive, high-performance Power BI reports and dashboards using advanced DAX calculations and Power Query.
+- Author robust Source-to-Target Mapping (STTM) specifications and establish data quality monitoring.
+- Write highly optimized SQL queries, stored procedures, and automated transformation pipelines.
+- Collaborate with engineering and business stakeholders to ensure compliance with enterprise data governance and security standards.
+
+Qualifications & Requirements:
+- 4+ years of professional experience in Business Intelligence, Data Engineering, or Analytics.
+- Advanced proficiency in SQL (Snowflake, PostgreSQL, or SQL Server) and Python for data transformation.
+- Extensive hands-on experience with Power BI, DAX, and semantic data modeling.
+- Solid understanding of dimensional modeling, STTM, and data warehousing principles.
+- Strong communication skills with a proven track record of translating complex analytical findings into executive insights.

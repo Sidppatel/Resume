@@ -1,0 +1,44 @@
+{
+  "candidate_name": "ALEX R. MORGAN",
+  "generated_at": "2026-08-22T00:00:00Z",
+  "companies": [
+    {
+      "company": "TECH CORP GLOBAL",
+      "location": "Austin, TX",
+      "industry": "Enterprise Software & Cloud Platforms",
+      "company_overview": "Tech Corp Global is a leading enterprise cloud software provider delivering scalable SaaS data platforms and analytics infrastructures.",
+      "core_business_and_operations": "Develops SaaS analytics solutions, manages enterprise data warehouses, and supports business intelligence pipelines.",
+      "enterprise_tech_environment": "Snowflake, dbt, Airflow, Power BI, Python, AWS Cloud Services, GitHub.",
+      "standard_domain_kpis": [
+        "Data pipeline SLA & daily reporting latency",
+        "Semantic model query performance and query cost reduction",
+        "Data accuracy & Source-to-Target Mapping (STTM) compliance",
+        "Executive dashboard adoption rate"
+      ],
+      "roles": [
+        {
+          "role": "Senior Data Analyst",
+          "dates": "Jan 2023 – Present",
+          "role_scope": "Leads enterprise data modeling, automated dbt transformations, and executive Power BI reporting across business units.",
+          "core_responsibilities": [
+            "Architecting automated data marts using dbt and Snowflake",
+            "Designing and deploying executive Power BI dashboards with row-level security",
+            "Implementing automated data quality checks and STTM lineage documentation"
+          ],
+          "transferable_technical_skills": [
+            "SQL",
+            "Python (Pandas, Polars)",
+            "dbt",
+            "Snowflake",
+            "Power BI (DAX)",
+            "Git"
+          ],
+          "domain_boundary_rules": {
+            "what_to_include": "Focus on enterprise software analytics, cloud data warehouses, dbt data modeling, and BI dashboards.",
+            "what_never_to_include": "Do not include physical manufacturing metrics, clinical healthcare diagnostics, or defense hardware systems."
+          }
+        }
+      ]
+    }
+  ]
+}

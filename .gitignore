@@ -22,18 +22,42 @@ venv.bak/
 .idea/
 *.swp
 *.swo
+*.sublime-workspace
+*.sublime-project
 
-# Output docx files (keep output directory structure)
+# OS artifacts
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Output docx & pdf files (keep output directory structure)
 output/*.docx
+output/*.pdf
 !output/.gitkeep
 
-# Active/Personal resume data & JD files (Keep sample files only in git)
+# Active/Personal resume data, JD files & Career Knowledge
 data/resume_data.json
 data/resume_static.json
 data/resume_static-*.json
+data/career_knowledge.json
+data/career_knowledge-*.json
 data/jd.txt
 data/jd.text
 
+# Keep sample templates tracked in git
+!data/*.sample.*
+!data/resume_data.sample.json
+!data/resume_static.sample.json
+!data/career_knowledge.sample.json
+!data/jd.sample.txt
+
+# Local SQLite Database (Resume Vault)
+data/*.db
+data/*.db-journal
+data/*.sqlite
+data/*.sqlite3
+
 # Temporary / Scratch files
 *.tmp
+*.bak
 data/*_dryrun.tmp

@@ -483,9 +483,26 @@ class ResumeBuilder:
         if "education_and_certifications" in data and data["education_and_certifications"]:
             self.add_education_and_certifications(data["education_and_certifications"])
 
-    def save(self, output_path: Union[str, Path]):
-        """Save the generated Word document to file."""
+    def save(self, output_path: Union[str, Path]) -> Path:
+        """Save the generated Word document to file, handling Windows file locking gracefully."""
         path = Path(output_path)
         path.parent.mkdir(parents=True, exist_ok=True)
-        self.doc.save(str(path))
-        print(f"[+] Resume successfully created at: {output_path}")
+        try:
+            self.doc.save(str(path))
+            print(f"[+] Resume successfully created at: {path}")
+            return path
+        except PermissionError:
+            # Fallback if document is currently open and locked in Microsoft Word
+            stem = path.stem
+            ext = path.suffix
+            fallback_path = path.parent / f"{stem}_new{ext}"
+            try:
+                self.doc.save(str(fallback_path))
+                print(f"[!] Warning: '{path.name}' is open in another program (like Word).")
+                print(f"[+] Saved successfully to fallback location: {fallback_path}")
+                return fallback_path
+            except Exception as e:
+                raise PermissionError(
+                    f"Could not save to '{path}' because it is open in Microsoft Word. "
+                    f"Please close Word and run `python build_resume.py` again."
+                ) from e

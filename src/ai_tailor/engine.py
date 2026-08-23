@@ -11,22 +11,26 @@ from typing import Dict, Any, Optional, Tuple, Union
 from .config import TailorConfig
 from .prompts import PromptBuilder
 from .parser import TailorResponseParser
+from ..db import get_db, ResumeDatabase
 
 
 class ResumeTailor:
     """
     Orchestrates the AI resume tailoring pipeline:
-    1. Loads Job Description, static candidate profile, and current resume.
-    2. Builds optimized ATS prompts.
+    1. Loads Job Description, static candidate profile, career domain knowledge, and current resume.
+    2. Builds optimized ATS prompts with strict Job Title & Employer Domain Fidelity.
     3. Calls NVIDIA NIM DeepSeek API with live token streaming and reasoning display.
     4. Cleans JSON response, merges with static profile, and saves updated resume data.
+    5. Archives the session (query, reasoning, prompts, tailored data) into local SQLite database.
     """
 
-    def __init__(self, config: Optional[TailorConfig] = None):
+    def __init__(self, config: Optional[TailorConfig] = None, db: Optional[ResumeDatabase] = None):
         self.config = config or TailorConfig()
         self.client = self.config.create_client()
         self.prompt_builder = PromptBuilder()
         self.parser = TailorResponseParser()
+        self.db = db or get_db()
+        self.last_session_id: Optional[int] = None
 
     @staticmethod
     def _resolve_jd_path(jd_path: Union[str, Path]) -> Path:
@@ -40,14 +44,43 @@ class ResumeTailor:
             return alt
         return p
 
+    @staticmethod
+    def _resolve_knowledge_path(
+        knowledge_path: Optional[Union[str, Path]],
+        static_path: Union[str, Path]
+    ) -> Optional[Path]:
+        """Helper to resolve knowledge file, supporting auto-detection based on static profile."""
+        if knowledge_path:
+            p = Path(knowledge_path)
+            if p.exists():
+                return p
+            return None
+
+        # Auto-detection based on static profile name
+        p_static = Path(static_path)
+        stem = p_static.stem
+        # Check profile-specific first (e.g. data/career_knowledge-Vidhi.json)
+        if stem.startswith("resume_static-"):
+            suffix = stem[len("resume_static-"):]
+            cand = p_static.parent / f"career_knowledge-{suffix}.json"
+            if cand.exists():
+                return cand
+        # Check default data/career_knowledge.json
+        cand_default = p_static.parent / "career_knowledge.json"
+        if cand_default.exists():
+            return cand_default
+        return None
+
     def tailor(
         self,
         jd_path: Union[str, Path] = "data/jd.txt",
         static_path: Union[str, Path] = "data/resume_static.json",
         current_resume_path: Union[str, Path] = "data/resume_data.json",
+        knowledge_path: Optional[Union[str, Path]] = None,
         output_path: Optional[Union[str, Path]] = "data/resume_data.json",
         show_reasoning: bool = False,
-        dry_run: bool = False
+        dry_run: bool = False,
+        save_to_db: bool = True
     ) -> Tuple[Dict[str, Any], Optional[str]]:
         """
         Executes end-to-end resume tailoring against a Job Description.
@@ -69,11 +102,24 @@ class ResumeTailor:
         static_data = self.parser.load_json_file(static_path)
         current_resume = self.parser.load_json_file(current_resume_path)
 
+        # Load career knowledge if available
+        knowledge_data = None
+        resolved_knowledge = self._resolve_knowledge_path(knowledge_path, static_path)
+        if resolved_knowledge and resolved_knowledge.exists():
+            try:
+                knowledge_data = self.parser.load_json_file(resolved_knowledge)
+                print(f"[*] Career Knowledge: Loaded ({resolved_knowledge})", flush=True)
+            except Exception as e:
+                print(f"[!] Warning: Failed loading career knowledge from {resolved_knowledge}: {e}", file=sys.stderr)
+        else:
+            print("[*] Career Knowledge: Not found (using static profile context)", flush=True)
+
         system_prompt = self.prompt_builder.build_system_prompt()
         user_prompt = self.prompt_builder.build_user_prompt(
             static_data=static_data,
             current_resume=current_resume,
-            jd_text=jd_text
+            jd_text=jd_text,
+            knowledge_data=knowledge_data
         )
 
         # Configure extra_body based on thinking configuration
@@ -191,5 +237,25 @@ class ResumeTailor:
             out_file.parent.mkdir(parents=True, exist_ok=True)
             with open(out_file, "w", encoding="utf-8") as f:
                 json.dump(merged_data, f, indent=2)
+
+        # Archive session to local SQLite database
+        self.last_session_id = None
+        if save_to_db and not dry_run:
+            try:
+                self.last_session_id = self.db.save_tailoring_run(
+                    jd_text=jd_text,
+                    tailored_data=merged_data,
+                    static_data=static_data,
+                    knowledge_data=knowledge_data,
+                    prompt_system=system_prompt,
+                    prompt_user=user_prompt,
+                    thinking_process=full_reasoning,
+                    token_count=token_count[0],
+                    execution_time_seconds=elapsed,
+                    model=self.config.model,
+                    reasoning_effort=self.config.reasoning_effort
+                )
+            except Exception as e:
+                print(f"[!] Warning: Could not save session to local DB: {e}", file=sys.stderr)
 
         return merged_data, full_reasoning

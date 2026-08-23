@@ -32,6 +32,13 @@ def main():
         help="Path to static resume profile JSON (default: data/resume_static.json)",
     )
     parser.add_argument(
+        "--knowledge",
+        "-k",
+        type=str,
+        default=None,
+        help="Path to career domain knowledge JSON (default: auto-detected as data/career_knowledge[-profile].json)",
+    )
+    parser.add_argument(
         "--data",
         "-d",
         type=str,
@@ -76,8 +83,36 @@ def main():
         action="store_true",
         help="Run AI tailoring and display output without writing to file.",
     )
+    parser.add_argument(
+        "--no-db",
+        action="store_true",
+        help="Do not archive this tailoring query and output into the local SQLite database.",
+    )
+    parser.add_argument(
+        "--history",
+        action="store_true",
+        help="Display recent tailoring queries and runs from the local SQLite database and exit.",
+    )
 
     args = parser.parse_args()
+
+    if args.history:
+        from src.db import get_db
+        db = get_db()
+        sessions = db.list_sessions(limit=15)
+        print("========================================")
+        print("       Resume Tailoring History         ")
+        print("========================================")
+        if not sessions:
+            print("[*] No tailoring sessions recorded yet in database.")
+        else:
+            print(f"{'ID':<4} | {'Date & Time':<19} | {'Target Title':<35} | {'Tokens':<6} | {'Time'}")
+            print("-" * 75)
+            for s in sessions:
+                print(f"{s['id']:<4} | {s['created_at'][:19]:<19} | {s['target_job_title'][:35]:<35} | {s['token_count']:<6} | {s['execution_time_seconds']:.1f}s")
+        print("========================================")
+        print("Tip: Run `python history.py show <ID>` for complete query details & reasoning.")
+        return
 
     print("========================================", flush=True)
     print("       AI Resume Data Tailor            ", flush=True)
@@ -87,6 +122,7 @@ def main():
     print(f"[*] Static Profile:   {args.static}", flush=True)
     print(f"[*] Current Resume:   {args.data}", flush=True)
     print(f"[*] Output Target:    {args.output if not args.dry_run else '[DRY RUN - No file written]'}", flush=True)
+    print(f"[*] Local Vault DB:   {'Enabled (data/resume_vault.db)' if not args.no_db and not args.dry_run else 'Disabled'}", flush=True)
     print("----------------------------------------", flush=True)
 
     try:
@@ -101,9 +137,11 @@ def main():
             jd_path=args.jd,
             static_path=args.static,
             current_resume_path=args.data,
+            knowledge_path=args.knowledge,
             output_path=args.output,
             show_reasoning=args.show_reasoning,
-            dry_run=args.dry_run
+            dry_run=args.dry_run,
+            save_to_db=not args.no_db
         )
 
         if args.show_reasoning and reasoning:
@@ -118,6 +156,9 @@ def main():
         print(f"[*] Skill Categories: {len(merged_data.get('technical_skills', []))}", flush=True)
         print(f"[*] Experience Roles: {len(merged_data.get('professional_experience', []))}", flush=True)
         print(f"[*] Key Projects:     {len(merged_data.get('key_projects', []))}", flush=True)
+
+        if tailor_engine.last_session_id:
+            print(f"[+] Saved to Local DB: Session #{tailor_engine.last_session_id} in data/resume_vault.db", flush=True)
 
         if not args.dry_run:
             print(f"[+] Updated resume JSON saved to: {args.output}", flush=True)

@@ -55,8 +55,8 @@
       "tools": "Snowflake, dbt, Power BI, Python",
       "dates": "2023 \u2013 2024",
       "bullets": [
-        "Engineered end-to-end analytics platform that consolidated disparate CRM and ERP data streams.",
-        "Implemented role-based row-level security in **Power BI** and built modular semantic models supporting **$50M+ ARR operations**."
+        "**Execution & Impact:** Engineered end-to-end analytics platform that consolidated disparate CRM and ERP data streams using **dbt** and **Snowflake**.",
+        "**Business Outcome:** Implemented role-based row-level security in **Power BI** and built modular semantic models supporting **$50M+ ARR operations** while reducing latency by **40%**."
       ]
     }
   ],

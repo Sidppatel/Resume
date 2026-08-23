@@ -14,27 +14,31 @@
       "company": "TECH CORP GLOBAL",
       "role": "Senior Data Analyst",
       "location": "Austin, TX",
-      "dates": "Jan 2023 – Present"
+      "dates": "Jan 2023 \u2013 Present",
+      "industry": "Enterprise Software & Cloud Platforms",
+      "core_focus": "Enterprise data marts, dbt transformations, Snowflake data modeling, executive Power BI dashboards, STTM, data quality"
     },
     {
       "company": "INNOVATIVE DATA SYSTEMS",
       "role": "Data Analyst",
       "location": "Dallas, TX",
-      "dates": "Jun 2020 – Dec 2022"
+      "dates": "Jun 2020 \u2013 Dec 2022",
+      "industry": "B2B SaaS & Analytics",
+      "core_focus": "Data ingestion pipelines in Python & SQL, query performance tuning, KPI standardization, cross-functional reporting"
     }
   ],
   "education_and_certifications": [
     {
       "institution": "University of Texas at Austin",
       "title": "Bachelor of Science in Computer Science & Data Analytics",
-      "dates": "2016 – 2020",
+      "dates": "2016 \u2013 2020",
       "bullets": [
         "Honors Graduate, President's Honor Roll"
       ]
     },
     {
       "institution": "Amazon Web Services (AWS)",
-      "title": "AWS Certified Data Analytics – Specialty",
+      "title": "AWS Certified Data Analytics \u2013 Specialty",
       "dates": "2023",
       "credential_id": "AWS-DAS-2023-XYZ",
       "bullets": []
